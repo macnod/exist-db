@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+    exist-db:
+        image: evolvedbinary/exist-db:eXist-4.3.1
+        container_name: exist-db
+        networks: 
+            - exist-db-net
+        ports:
+            - "9080:8080"
+            - "9443:8443"
+        volumes:
+            - ~/exist-db/exist-data:/exist-data
+            - ~/exist-db/load:/load
+networks:
+    exist-db-net:

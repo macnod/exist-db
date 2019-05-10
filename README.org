@@ -1,0 +1,25 @@
+* eXist-db docker-compose file
+This is a simple docker-compose.yml file that starts eXist-db in a way that the data is persistent across server runs.  Before running this, you must put the following tree in your home directory:
+
+#+begin_example
+exist-db/
+├── exist-data
+└── load
+#+end_example
+
+The exist-data directory is mounted at /exist-data and is where eXist-db will store and index the data that you load into the database.  The load directory is mounted at /load and is just a directory that's available to eXist-db for anything you want.  For example, you might want to copy files there that you can later list, load, or delete using XQuery.  Here's an example that loads a bunch of files in a subdirectory of the ~/exist-db/load (accessible at /load) directory:
+
+#+begin_src xquery
+let $catalog:= xmldb:store-files-from-pattern(
+    '/db/umc/catalog',
+    '/load/umc',
+    '*.xml')
+#+end_src
+
+To start eXist-db, make sure the exist-db directory tree exists in your home directory, and then type
+
+#+begin_src sh
+docker-compose up
+#+end_src
+
+That's it!
